@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
 
 export const data = new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Replies with Pong!");
+    .setName("join")
+    .setDescription("Create a queue!");
 
 export async function execute(interaction) {
-    await interaction.reply("Pong!");
+    await interaction.reply("A queue has been created");
 }
