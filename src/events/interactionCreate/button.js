@@ -12,6 +12,7 @@ export default async function handleButtonInteraction(_, interaction) {
             content: "This lobby does not exist",
             ephemeral: true,
         });
+        return;
     }
 
     if (interaction.customId.startsWith("join_lobby")) {
