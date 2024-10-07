@@ -1,13 +1,20 @@
 import { Lobby } from "./lobby.js";
 
 class LobbyManager {
+    static nextLobbyId = 1;
     constructor() {
-        this.lobbyList = [];
+        this.lobbies = new Map();
     }
 
-    create() {
-        const lobby = new Lobby();
-        this.lobbyCount++;
+    createLobby() {
+        const newLobby = new Lobby(LobbyManager.nextLobbyId);
+        this.lobbies.set(newLobby.id, newLobby);
+        LobbyManager.nextLobbyId++;
+        return newLobby;
+    }
+
+    getLobby(id) {
+        return this.lobbies.get(parseInt(id));
     }
 }
 
