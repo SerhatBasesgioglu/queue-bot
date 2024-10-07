@@ -29,7 +29,7 @@ export async function execute(interaction) {
         .setStyle(ButtonStyle.Danger);
 
     const statusButton = new ButtonBuilder()
-        .setCustomId(`lobby_state_${lobby.id}`)
+        .setCustomId(`lobby_status_${lobby.id}`)
         .setLabel("Status")
         .setStyle(ButtonStyle.Secondary);
 

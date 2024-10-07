@@ -15,7 +15,7 @@ export class Lobby {
     }
 
     getCount() {
-        return this.members.length;
+        return this.members.size;
     }
 
     addMember(memberId) {
