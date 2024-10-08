@@ -6,7 +6,7 @@ class LobbyManager {
         this.lobbies = new Map();
     }
 
-    createLobby(maxPlayer = 3) {
+    createLobby(maxPlayer = 6) {
         const newLobby = new Lobby(LobbyManager.nextLobbyId, maxPlayer);
         this.lobbies.set(newLobby.id, newLobby);
         LobbyManager.nextLobbyId++;

@@ -1,5 +1,11 @@
 import LobbyState from "../enums/lobbyState.js";
 import LobbyStatus from "../enums/lobbyStatus.js";
+import {
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    EmbedBuilder,
+} from "discord.js";
 
 export class Lobby {
     constructor(id, maxPlayer = 6) {
@@ -8,7 +14,6 @@ export class Lobby {
         this.state = LobbyState.QUEUE;
         this.createdTime = new Date();
         this.maxPlayer = maxPlayer;
-        this.messageManager = null;
         console.log(`Lobby with id ${this.id} has been created!`);
     }
 
@@ -47,5 +52,57 @@ export class Lobby {
 
     endGame() {
         this.state = LobbyState.END_SCREEN;
+    }
+
+    createMessage() {
+        const memberList = Array.from(this.getMembers());
+        const embed = new EmbedBuilder()
+            .setColor(0x0099ff)
+            .setTitle(`${this.maxPlayer / 2}v${this.maxPlayer / 2} Lobby`)
+            .addFields(
+                { name: `Lobby Status: ${this.state}`, value: ` ` },
+                {
+                    name: "Players",
+                    value:
+                        memberList.length > 0
+                            ? memberList.join(", ")
+                            : "No members",
+                },
+            );
+
+        const joinButton = new ButtonBuilder()
+            .setCustomId(`join_lobby_${this.id}`)
+            .setLabel("Join lobby")
+            .setStyle(ButtonStyle.Primary);
+
+        const leaveButton = new ButtonBuilder()
+            .setCustomId(`leave_lobby_${this.id}`)
+            .setLabel("Leave lobby")
+            .setStyle(ButtonStyle.Danger);
+
+        const statusButton = new ButtonBuilder()
+            .setCustomId(`lobby_status_${this.id}`)
+            .setLabel("Status")
+            .setStyle(ButtonStyle.Secondary);
+
+        const actionRow = new ActionRowBuilder().addComponents(
+            joinButton,
+            leaveButton,
+            statusButton,
+        );
+        return { embeds: [embed], components: [actionRow] };
+    }
+
+    async sendMessage(channel) {
+        const message = this.createMessage();
+        const messageRef = await channel.send(message);
+        this.messageId = messageRef.id;
+    }
+
+    async updateMessage(channel) {
+        if (!this.messageId) return;
+        const updatedMessage = this.createMessage();
+        const messageRef = await channel.messages.fetch(this.messageId);
+        await messageRef.edit(updatedMessage);
     }
 }

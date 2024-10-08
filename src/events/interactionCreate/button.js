@@ -37,7 +37,7 @@ export default async function handleButtonInteraction(_, interaction) {
                 break;
         }
 
-        lobby.messageManager.updateMessage(interaction.channel);
+        lobby.updateMessage(interaction.channel);
         await interaction.reply(message);
     }
 
@@ -59,7 +59,7 @@ export default async function handleButtonInteraction(_, interaction) {
                 message.content = "Unknown error";
                 break;
         }
-        lobby.messageManager.updateMessage(interaction.channel);
+        lobby.updateMessage(interaction.channel);
         await interaction.reply(message);
     }
 

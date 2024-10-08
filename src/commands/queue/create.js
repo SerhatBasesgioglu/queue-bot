@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
 import lobbyManager from "../../classes/lobbyManager.js";
-import { LobbyMessageManager } from "../../classes/lobbyMessageManager.js";
 
 export const data = new SlashCommandBuilder()
     .setName("create")
@@ -21,11 +20,15 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction) {
     const maxPlayer = interaction.options.getInteger("player_count");
-    let lobby = lobbyManager.createLobby(maxPlayer);
-    lobby.messageManager = new LobbyMessageManager(lobby);
-    lobby.messageManager.sendMessage(interaction.channel);
-    await interaction.reply({
+    const lobby = lobbyManager.createLobby(maxPlayer);
+    lobby.sendMessage(interaction.channel);
+    const replyMessage = await interaction.reply({
         content: "Lobby has been created",
-        ephemeral: true,
+        ephemeral: false,
+        fetchReply: true,
     });
+
+    setTimeout(() => {
+        replyMessage.delete().catch(console.error);
+    }, 5000);
 }
