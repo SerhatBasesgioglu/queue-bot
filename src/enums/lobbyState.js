@@ -1,8 +1,8 @@
 const LobbyState = {
-    QUEUE: 1,
-    CAPTAIN_SELECTION: 2,
-    MAP_SELECTION: 3,
-    GAME: 4,
-    END_SCREEN: 5,
+    QUEUE: "Queue",
+    CAPTAIN_SELECTION: "Captain Selection",
+    MAP_SELECTION: "Map Selection",
+    GAME: "In Game",
+    END_SCREEN: "End of Game",
 };
 export default LobbyState;
