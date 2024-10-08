@@ -8,14 +8,28 @@ import lobbyManager from "../../classes/lobbyManager.js";
 
 export const data = new SlashCommandBuilder()
     .setName("create")
-    .setDescription("Creates a new game lobby");
+    .setDescription("Creates a new game lobby")
+    .addIntegerOption((option) =>
+        option
+            .setName("player_count")
+            .setDescription("count")
+            .setRequired(true)
+            .addChoices(
+                { name: "2", value: 2 },
+                { name: "4", value: 4 },
+                { name: "6", value: 6 },
+                { name: "8", value: 8 },
+                { name: "10", value: 10 },
+            ),
+    );
 
 export async function execute(interaction) {
-    let lobby = lobbyManager.createLobby();
+    let maxPlayer = interaction.options.getInteger("player_count");
+    let lobby = lobbyManager.createLobby(maxPlayer);
 
     const embed = new EmbedBuilder()
         .setColor(0x0099ff)
-        .setTitle("Title")
+        .setTitle(`${maxPlayer / 2}v${maxPlayer / 2} Lobby`)
         .setDescription("Description");
 
     const joinButton = new ButtonBuilder()
