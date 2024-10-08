@@ -8,6 +8,7 @@ export class Lobby {
         this.state = LobbyState.QUEUE;
         this.createdTime = new Date();
         this.maxPlayer = maxPlayer;
+        this.messageManager = null;
         console.log(`Lobby with id ${this.id} has been created!`);
     }
 

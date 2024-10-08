@@ -1,10 +1,6 @@
-import {
-    ActionRowBuilder,
-    ButtonBuilder,
-    EmbedBuilder,
-} from "@discordjs/builders";
-import { ButtonStyle, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import lobbyManager from "../../classes/lobbyManager.js";
+import { LobbyMessageManager } from "../../classes/lobbyMessageManager.js";
 
 export const data = new SlashCommandBuilder()
     .setName("create")
@@ -24,34 +20,12 @@ export const data = new SlashCommandBuilder()
     );
 
 export async function execute(interaction) {
-    let maxPlayer = interaction.options.getInteger("player_count");
+    const maxPlayer = interaction.options.getInteger("player_count");
     let lobby = lobbyManager.createLobby(maxPlayer);
-
-    const embed = new EmbedBuilder()
-        .setColor(0x0099ff)
-        .setTitle(`${maxPlayer / 2}v${maxPlayer / 2} Lobby`)
-        .setDescription("Description");
-
-    const joinButton = new ButtonBuilder()
-        .setCustomId(`join_lobby_${lobby.id}`)
-        .setLabel("Join lobby")
-        .setStyle(ButtonStyle.Primary);
-
-    const leaveButton = new ButtonBuilder()
-        .setCustomId(`leave_lobby_${lobby.id}`)
-        .setLabel("Leave lobby")
-        .setStyle(ButtonStyle.Danger);
-
-    const statusButton = new ButtonBuilder()
-        .setCustomId(`lobby_status_${lobby.id}`)
-        .setLabel("Status")
-        .setStyle(ButtonStyle.Secondary);
-
-    const actionRow = new ActionRowBuilder().addComponents(
-        joinButton,
-        leaveButton,
-        statusButton,
-    );
-
-    interaction.reply({ embeds: [embed], components: [actionRow] });
+    lobby.messageManager = new LobbyMessageManager(lobby);
+    lobby.messageManager.sendMessage(interaction.channel);
+    await interaction.reply({
+        content: "Lobby has been created",
+        ephemeral: true,
+    });
 }
