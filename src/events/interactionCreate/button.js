@@ -62,7 +62,7 @@ export default async function handleButtonInteraction(_, interaction) {
 
     if (interaction.customId.startsWith("lobby_status")) {
         await interaction.reply({
-            content: `Lobby status: ${lobby.getCount()}/6`,
+            content: `Lobby status: ${lobby.getCount()}/${lobby.maxPlayer}`,
             ephemeral: true,
         });
     }
