@@ -1,6 +1,6 @@
 import { ChannelType, SlashCommandBuilder } from "discord.js";
-import queue from "../../classes/queue.js";
-import { Player } from "../../classes/player.js";
+import { queue } from "../../models/classes/queue.js";
+import { Player } from "../../models/classes/player.js";
 
 export const data = new SlashCommandBuilder()
     .setName("join")

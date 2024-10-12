@@ -1,5 +1,9 @@
-import lobbyManager from "../../classes/lobbyManager.js";
-import LobbyStatus from "../../enums/lobbyStatus.js";
+import {
+    ApplicationCommandOptionWithAutocompleteMixin,
+    ModalSubmitFields,
+} from "discord.js";
+import { lobbyManager } from "../../models/classes/lobbyManager.js";
+import { LobbyStatus } from "../../models/enums/lobbyStatus.js";
 
 export default async function handleButtonInteraction(_, interaction) {
     if (!interaction.isButton()) return;
@@ -17,11 +21,10 @@ export default async function handleButtonInteraction(_, interaction) {
 
     if (interaction.customId.startsWith("join_lobby")) {
         const status = lobby.addMember(interaction.user.id);
-        let message = {
+        const message = {
             content: "",
             ephemeral: true,
         };
-
         switch (status) {
             case LobbyStatus.LOBBY_IS_FULL:
                 message.content = "This lobby is full!";
@@ -43,7 +46,7 @@ export default async function handleButtonInteraction(_, interaction) {
 
     if (interaction.customId.startsWith("leave_lobby")) {
         const status = lobby.removeMember(interaction.user.id);
-        let message = {
+        const message = {
             content: "",
             ephemeral: true,
         };

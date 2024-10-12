@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import lobbyManager from "../../classes/lobbyManager.js";
+import { lobbyManager } from "../../models/classes/lobbyManager.js";
 
 export const data = new SlashCommandBuilder()
     .setName("create")
@@ -17,7 +17,6 @@ export const data = new SlashCommandBuilder()
                 { name: "10", value: 10 },
             ),
     );
-
 export async function execute(interaction) {
     const maxPlayer = interaction.options.getInteger("player_count");
     const lobby = lobbyManager.createLobby(maxPlayer);

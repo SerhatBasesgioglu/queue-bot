@@ -1,11 +1,11 @@
-import LobbyState from "../enums/lobbyState.js";
-import LobbyStatus from "../enums/lobbyStatus.js";
 import {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
     EmbedBuilder,
 } from "discord.js";
+import { LobbyState } from "../enums/lobbyState.js";
+import { LobbyStatus } from "../enums/lobbyStatus.js";
 
 export class Lobby {
     constructor(id, maxPlayer = 6) {

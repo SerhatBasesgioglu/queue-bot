@@ -19,5 +19,4 @@ class LobbyManager {
 }
 
 //Only one manager is required so that object will be created in here.
-const lobbyManager = new LobbyManager();
-export default lobbyManager;
+export const lobbyManager = new LobbyManager();

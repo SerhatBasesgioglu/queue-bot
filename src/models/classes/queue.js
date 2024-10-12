@@ -20,5 +20,4 @@ class Queue {
     }
 }
 
-const queue = new Queue();
-export default queue;
+export const queue = new Queue();
